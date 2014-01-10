@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Edenred - <?php echo $title_for_layout?></title>
+
+<link rel="stylesheet" media="screen" href="/css/reset.css" />
+<link rel="stylesheet" media="screen" href="/css/style.css" />
+<link rel="stylesheet" media="screen" href="/css/messages.css" />
+<link rel="stylesheet" media="screen" href="/css/forms.css" />
+<link rel="stylesheet" media="screen" href="/css/tables.css" />
+<link rel="stylesheet" media="screen" href="/css/jquery.gritter.css" />
+
+<script src="/js/html5.js"></script>
+<!-- jquerytools -->
+<script src="/js/jquery.tools.min.js"></script>
+<script src="/js/jquery.tables.js"></script>
+<!--[if lt IE 9]>
+<link rel="stylesheet" media="screen" href="/css/ie.css" />
+<script type="text/javascript" src="/js/selectivizr.js"></script>
+<script type="text/javascript" src="/js/ie.js"></script>
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" media="screen" href="/css/ie8.css" />
+<![endif]-->
+
+<script type="text/javascript" src="/js/global.js"></script>
+<script type="text/javascript" src="/js/jquery.gritter.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    <?php
+    if(isset($notification)){
+        ?>
+	$.gritter.add({
+            title: 'Done!',
+            text: '<?php echo $notification; ?>'
+	});
+	<?php
+    } else if(isset($errorMsg)){
+        ?>
+	$.gritter.add({
+            title: 'Error!',
+            text: '<?php echo $errorMsg; ?>'
+	});
+	<?php
+    }
+    ?>
+});
+</script>
+</head>
+<body>
+
+    <div id="wrapper">
+        <?php echo $this->element('header'); ?>
+
+        <?php echo $content_for_layout ?>
+    </div>
+
+    <?php echo $this->element('footer'); ?>
+
+</body>
+</html>

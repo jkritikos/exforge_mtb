@@ -1,0 +1,80 @@
+<?php
+
+class Venue extends AppModel {
+    var $name = 'Venue';
+    
+    function saveLocationObjects($regionCode,$regionLabel,$department,$town,$district){
+
+        //check if the region exists
+        $this->Region = ClassRegistry::init('Region');
+        $regionObj = $this->Region->findbycode($regionCode);
+        $regionId = "";
+
+        //insert region or get existing id
+        if($regionObj != null){
+            $regionId = $regionObj['Region']['id'];
+        } else {
+            $regionObj = array();
+            $regionObj['Region']['code'] = $regionCode;
+            $regionObj['Region']['name'] = $regionLabel;
+            $this->Region->save($regionObj);
+            $regionId = $this->Region->getLastInsertID();
+        }
+
+        //check if the department exists
+        $this->Department = ClassRegistry::init('Department');
+        $departmentObj = $this->Department->findbyname($department);
+        $departmentId = "";
+
+        //insert department or get existing id
+        if($departmentObj != null){
+            $departmentId = $departmentObj['Department']['id'];
+        } else {
+            $departmentObj = array();
+            $departmentObj['Department']['name'] = $department;
+            $departmentObj['Department']['region_id'] = $regionId;
+            $this->Department->save($departmentObj);
+            $departmentId = $this->Department->getLastInsertID();
+        }
+
+        //check if the town exists
+        $this->Town = ClassRegistry::init('Town');
+        $townObj = $this->Town->findbyname($town);
+        $townId = "";
+
+        //insert town or get existing id
+        if($townObj != null){
+            $townId = $townObj['Town']['id'];
+        } else {
+            $townObj = array();
+            $townObj['Town']['name'] = $town;
+            $townObj['Town']['department_id'] = $departmentId;
+            $this->Town->save($townObj);
+            $townId = $this->Town->getLastInsertID();
+        }
+
+        //check if the district exists
+        $this->District = ClassRegistry::init('District');
+        $districtObj = $this->District->findbyname($town);
+        $districtId = "";
+
+        //insert town or get existing id
+        if($districtObj != null){
+            $districtId = $districtObj['District']['id'];
+        } else {
+            $districtObj = array();
+            $districtObj['District']['name'] = $district;
+            $districtObj['District']['town_id'] = $townId;
+            $this->District->save($districtObj);
+            $districtId = $this->District->getLastInsertID();
+        }
+
+        $data['district'] = $districtId;
+        $data['town'] = $townId;
+        $data['department'] = $departmentId;
+        $data['region'] = $regionId;
+
+        return $data;
+    }
+	
+}

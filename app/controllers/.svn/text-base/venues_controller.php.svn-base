@@ -1,0 +1,108 @@
+<?php
+
+App::import('Core', 'l10n', 'Sanitize');
+
+class VenuesController extends AppController {
+    var $components = array('Cookie');
+
+    /*Executed before all functions*/
+    function beforeFilter() {
+	parent::beforeFilter();
+
+	$this->log("Venues->beforeFilter() setting variables", LOG_DEBUG);
+
+	$this->set('headerTitle', "Retailer Management");
+	$this->set('activeTab', 'venues');
+    }
+
+    function index(){
+	$this->log("Venues->index() called", LOG_DEBUG);
+	$currentUser = $this->Session->read('userID');
+	if($currentUser != null){
+	} else {
+            $this->requireLogin('/venues/index');
+	}
+    }
+
+    function search(){
+	$currentUser = $this->Session->read('userID');
+	if($currentUser != null){
+	} else {
+            $this->requireLogin('/venues/search');
+	}
+    }
+
+    function upload(){
+	$this->log("Venues->upload() called", LOG_DEBUG);
+	$currentUser = $this->Session->read('userID');
+	if($currentUser != null){
+
+            if(isset($_POST['submitted'])){
+		$targetPath = $_SERVER["DOCUMENT_ROOT"] ."/uploaded_files/";
+		$userDirectoryOK = file_exists($targetPath);
+
+		//Create folder for this user if needed
+		if(!$userDirectoryOK){
+                    $this->log("Venue->upload() creating $targetPath" , LOG_DEBUG);
+                    $userDirectoryOK = mkdir($targetPath);
+		}
+
+		//Check for valid extension
+		$path_info = pathinfo(basename($_FILES['uploadfile']['name']));
+    		$fileExtension = $path_info['extension'];
+
+		$dateString = date("dmY", time());
+		$uploadfile = $targetPath ."/". "$dateString.$fileExtension";
+
+		if($fileExtension != 'txt'){
+                    $this->set('errorMsg', 'Invalid file type. Please save your Excel data file as a tab-delimeted text file and try again');
+		} else {
+
+                    if(is_uploaded_file($_FILES['uploadfile']['tmp_name']) && move_uploaded_file($_FILES['uploadfile']['tmp_name'], $uploadfile)){
+                        $this->log("Venues->upload() uploading succeeded" , LOG_DEBUG);
+
+                        //read file
+                        $i=0;
+                        $file = fopen($uploadfile, "r");
+                        while(!feof($file)) {
+                            $i++;
+
+                            //skip the header line
+                            if($i == 1){
+                                continue;
+                            }
+
+                            $line = fgets($file);
+                            $lineData = explode("\t", $line);
+
+                            $obj = array();
+                            $obj['Venue']['name'] = $lineData[6];
+                            if($this->Venue->save($obj)){
+                                $this->log("Venues->upload() save OK " , LOG_DEBUG);
+                            } else {
+                                $this->log("Venues->upload() save FAILED " , LOG_DEBUG);
+                            }
+
+                            var_dump($lineData);
+                            if($i == 3) {
+                                $this->log("Venues->upload() greek handling ".$lineData[6] , LOG_DEBUG);
+                                return;
+                            }
+                        }
+
+                        fclose($file);
+
+                    } else {
+                        $this->set('errorMsg', 'Unable to upload the file. Please try again');
+                        $this->log("Venues->upload() uploading failed, possible error" , LOG_DEBUG);
+                    }
+		}
+            }
+
+	} else {
+            $this->requireLogin('/venues/upload');
+	}
+    }
+}
+
+?>

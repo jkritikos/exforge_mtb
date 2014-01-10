@@ -1,0 +1,19 @@
+<?php
+
+App::import('Core', 'l10n', 'Sanitize');
+
+class ReportsController extends AppController {
+	var $components = array('Cookie');
+
+	/*Executed before all functions*/
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->set('headerTitle', "Report Management");
+		$this->set('activeTab', "reports");
+	}
+
+	function index(){
+	}
+}
+
+?>

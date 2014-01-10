@@ -1,0 +1,50 @@
+<?php
+$name = $session->read('fname') . " " . $session->read('lname');
+
+//active tab
+$classVenues = "";
+$classUsers = "";
+$classReports = "";
+
+$this->log("header.ctp active tab is $activeTab", LOG_DEBUG);
+
+if($activeTab == 'venues'){
+	$classVenues = "class=\"active\"";
+	$classUsers = "";
+	$classReports = "";
+} else if($activeTab == 'users'){
+	$classVenues = ""; 
+	$classUsers = "class=\"active\"";
+	$classReports = "";
+} else if($activeTab == 'reports'){
+	$classVenues = "";
+	$classUsers = "";
+	$classReports = "class=\"active\"";
+}
+
+?>
+<header id="page-header">
+	<div class="wrapper">
+                <div id="util-nav">
+                    <ul>
+                        <li>Logged in as <?php echo $name; ?>:</li>
+			<li><a href="/users/profile">Profile</a></li>
+                        <li><a href="/users/logout">Logout</a></li>
+                    </ul>
+                </div>
+                <h1>Edenred Backoffice</h1>
+                <div id="main-nav">
+                    <ul class="clearfix">
+			<li <?php echo $classVenues; ?> ><a href="/venues">Retailers</a></li>
+			<li <?php echo $classUsers; ?> ><a href="/users">Users</a></li>
+                        <li <?php echo $classReports; ?> ><a href="/reports">Reports</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="page-subheader">
+                <div class="wrapper">
+                    <h2><?php echo $headerTitle; ?></h2>
+                    <!--<input placeholder="Search..." type="text" name="q" value="" />-->
+                </div>
+            </div>
+        </header>

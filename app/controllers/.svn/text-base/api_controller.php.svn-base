@@ -1,0 +1,40 @@
+<?php
+
+App::import('Vendor', 'phpQuery', array('file' =>'scrape'.DS.'simple_html_dom.php'));
+
+class ApiController extends AppController{
+	var $uses = null;
+
+	function index(){
+		$this->layout = 'blank';
+
+		$auth = base64_encode('iakritikos:Cosmote8');
+		$header = array("Proxy-Authorization: NTLM $auth");
+		$context = array
+		(
+		       'http' => array
+		       (
+		              'proxy' => 'marisanew.cosmote.gr:8080', // This needs to be the server and the port of the NTLM Authentication Proxy Server.
+		              'request_fulluri' => true,
+		              'header'=>$header
+		       ),
+		);
+
+		$context = stream_context_create($context);
+
+		$html2= file_get_html('http://slashdot.org/', false, $context);
+		foreach($html2->find('div.article') as $article) {
+		    $item['title']     = $article->find('div.title', 0)->plaintext;
+		    $item['intro']    = $article->find('div.intro', 0)->plaintext;
+		    $item['details'] = $article->find('div.details', 0)->plaintext;
+		    $articles[] = $item;
+		}
+
+		print_r($articles);
+		$html2->clear();
+		unset($html2);
+
+	}
+}
+
+?>
