@@ -45,7 +45,7 @@ if($activeTab == 'questions'){
         </div>
 
         <img height="36" src="/img/logo.png"/>
-        <h1>Exforge</h1>
+        <h1>Exforge Challenge</h1>
 
         <div id="main-nav">
             <ul class="clearfix">

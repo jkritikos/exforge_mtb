@@ -81,7 +81,14 @@ $(document).ready(function(){
     			return false;
     		}
     	}
-
+        
+        //keep a copy of the plain text
+        $('#plain_question').val($("#question").val());
+        $('#plain_answer_a').val($("#answer_a").val());
+        $('#plain_answer_b').val($("#answer_b").val());
+        $('#plain_answer_c').val($("#answer_c").val());
+        $('#plain_answer_d').val($("#answer_d").val());
+        
         var validLanguages = validateLanguageCombinations();
         if(!validLanguages){
             return false;
@@ -154,17 +161,25 @@ $(document).ready(function(){
             <form id="form" class="form panel" method="post" action="<?php echo $editUrl; ?>" novalidate>
 		<input type="hidden" name="data[Question][encrypted]" value="1"/>
                 <input type="hidden" name="data[Question][encrypted_answers]" value="1"/>
+                
+                <input type="hidden" id="plain_question" name="data[Question][plain_question]" value="" />
+                <input type="hidden" id="plain_answer_a" name="data[Question][plain_answer_a]" value="" />
+                <input type="hidden" id="plain_answer_b" name="data[Question][plain_answer_b]" value="" />
+                <input type="hidden" id="plain_answer_c" name="data[Question][plain_answer_c]" value="" />
+                <input type="hidden" id="plain_answer_d" name="data[Question][plain_answer_d]" value="" />
+                
                 <header><h2>Συμπληρώστε την παρακάτω φόρμα για να επεξεργαστείτε την ερώτηση:</h2></header>
 
 		<hr />
 		<fieldset>
+                    <!--
                     <div class="clearfix">
                         <label>Γλώσσα ερώτησης *</label>
                         <select id="questionLanguageSelector" required="required" name="data[Question][question_language_id]">
                             <option <?php if($question['Question']['question_language_id'] == '1') echo "selected"; ?> value="1">Ελληνικά</option>
                             <option <?php if($question['Question']['question_language_id'] == '2') echo "selected"; ?> value="2">Αγγλικά</option>
                         </select>
-                    </div>
+                    </div>-->
 		    <div class="clearfix">
                         <label>Κατηγορία *</label>
                         <select required="required" id="workTypeSelector" name="data[Question][category_id]">
@@ -185,11 +200,12 @@ $(document).ready(function(){
                         ?>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Set Ερωτήσεων *</label>
                         <label><?php echo $question['QuestionSet']['name']; ?></label>
 	                        
-                    </div>
+                    </div>-->
                     <div class="clearfix">
                         <label>Ερώτηση *</label>
                         <input id="question" size="80" type="text" name="data[Question][question]" required="required" value="<?php echo $question['Question']['question']; ?>"/>
@@ -228,6 +244,7 @@ $(document).ready(function(){
                             <option <?php if($points == "300") echo "selected "; ?> value="300">Δύσκολη (300)</option>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Αφορά Γλώσσα *</label>
                         <select id="questionLanguageTarget" required="required" name="data[Question][language_id]">
@@ -242,7 +259,7 @@ $(document).ready(function(){
                             <option <?php if($question['Question']['translation_rejected'] == "0") echo "selected "; ?> value="0">Όχι</option>
                             <option <?php if($question['Question']['translation_rejected'] == "1") echo "selected "; ?> value="1">Ναι</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="clearfix">
                         <label>Wikipedia URL</label>
                         <input id="wikipediaUrl" required="required" size="50" type="text" name="data[Question][wikipedia]" value="<?php echo $question['Question']['wikipedia']; ?>"/>
@@ -276,8 +293,8 @@ $(document).ready(function(){
 <!-- Right column/section -->
 
 <?php echo $this->element('menu_question'); ?>
-<?php debug($translatedQuestionLanguage); ?>
-<?php debug($originalQuestionLanguage); ?>
+<?php //debug($translatedQuestionLanguage); ?>
+<?php //debug($originalQuestionLanguage); ?>
  <!-- End of Right column/section -->
 
 

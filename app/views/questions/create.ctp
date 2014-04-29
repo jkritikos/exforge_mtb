@@ -20,8 +20,8 @@ function validateLanguageCombinations(){
 }
 
 function getTargetLanguageLabel(){
-    var v =  $("#questionLanguageTarget").val();
-       
+   var v =  -1;
+   
    if(v == '-1'){
        languageForQuestion = 'Όλες';
    } else if(v == '1'){
@@ -41,11 +41,7 @@ $(document).ready(function(){
     $("#tags").keyup(function(){
         this.value = this.value.toUpperCase(); 
     });
-    
-    $("#questionLanguageTarget").change(function(){
-        languageForQuestion = getTargetLanguageLabel();
-    });
-    
+     
     $("#questionLanguageSelector").change(function(){
        var selectedLang = $("#questionLanguageSelector").val();
        
@@ -98,6 +94,13 @@ $(document).ready(function(){
     		}
     	}
         
+        //keep a copy of the plain text
+        $('#plain_question').val($("#question").val());
+        $('#plain_answer_a').val($("#answer_a").val());
+        $('#plain_answer_b').val($("#answer_b").val());
+        $('#plain_answer_c').val($("#answer_c").val());
+        $('#plain_answer_d').val($("#answer_d").val());
+        
         //Build confirmation
         var selectedCorrect = $('#correct').val();
         var selectedCorrectLetter = '';
@@ -118,11 +121,11 @@ $(document).ready(function(){
             selectedCorrectAnswer = $('#answer_d').val();
         }
         
-        var confirmQuestion = 'Έχεις καταχωρήσει σαν απάντηση την '+selectedCorrectLetter+' = '+selectedCorrectAnswer+'.\n Τα tags σου είναι '+selectedTags+'.\n\n Αφορά γλώσσα '+languageForQuestion+' \n\n Είναι ΣΙΓΟΥΡΑ σωστά?';
+        var confirmQuestion = 'Έχεις καταχωρήσει σαν απάντηση την '+selectedCorrectLetter+' = '+selectedCorrectAnswer+'.\n Τα tags σου είναι '+selectedTags+'\n\n Είναι ΣΙΓΟΥΡΑ σωστά?';
         var confirmed = confirm(confirmQuestion);
         if(confirmed){
             
-            var validLanguages = validateLanguageCombinations();
+            var validLanguages = true;
             if(!validLanguages){
                 return false;
             } else {
@@ -204,6 +207,14 @@ $(document).ready(function(){
             <form id="form" class="form panel" method="post" action="/questions/create" novalidate>
                 <input type="hidden" name="data[Question][encrypted]" value="1"/>
                 <input type="hidden" name="data[Question][encrypted_answers]" value="1"/>
+                <input type="hidden" name="data[Question][language_id]" value="-1" />
+                
+                <input type="hidden" id="plain_question" name="data[Question][plain_question]" value="" />
+                <input type="hidden" id="plain_answer_a" name="data[Question][plain_answer_a]" value="" />
+                <input type="hidden" id="plain_answer_b" name="data[Question][plain_answer_b]" value="" />
+                <input type="hidden" id="plain_answer_c" name="data[Question][plain_answer_c]" value="" />
+                <input type="hidden" id="plain_answer_d" name="data[Question][plain_answer_d]" value="" />
+                
 		<header><h2>Συμπληρώστε την παρακάτω φόρμα για να δημιουργήσετε νέα ερώτηση:</h2></header>
 
 		<hr />
@@ -211,22 +222,25 @@ $(document).ready(function(){
                     <div class="clearfix">
                         <label>Γλώσσα ερώτησης *</label>
                         <select id="questionLanguageSelector" required="required" name="data[Question][question_language_id]">
-                            <option value="">Επιλέξτε</option>
+                            <!--<option value="">Επιλέξτε</option>-->
                             <option value="1">Ελληνικά</option>
-                            <option value="2">Αγγλικά</option>
-                            <option value="100">Δίγλωσση</option>
+                            <!--<option value="2">Αγγλικά</option>
+                            <option value="100">Δίγλωσση</option>-->
                         </select>
                     </div>
 		    <div class="clearfix">
                         <label>Κατηγορία *</label>
                         <select required="required" id="workTypeSelector" name="data[Question][category_id]">
-                        <option value="">Επιλέξτε</option>
+                        <option value="1000">Exforge</option>
                         <?php
+                        /*
                         foreach($categories as $k => $v){
                             ?>
                             <option value="<?php echo $k ?>"><?php echo $v ?></option>
                             <?php
                         }
+                         * 
+                         */
                         ?>
                         </select>
                     </div>
@@ -267,6 +281,7 @@ $(document).ready(function(){
                             <option value="300">Δύσκολη (300)</option>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Αφορά Γλώσσα *</label>
                         <select id="questionLanguageTarget" required="required" name="data[Question][language_id]">
@@ -274,9 +289,9 @@ $(document).ready(function(){
                             <option value="1">Ελληνικά</option>
                             <option value="2">Αγγλικά</option>                                
                         </select>
-                    </div>
+                    </div>-->
                     <div class="clearfix">
-                        <label>Wikipedia URL</label>
+                        <label>Wikipedia URL *</label>
                         <input id="wikipediaUrl" size="50" type="text" name="data[Question][wikipedia]" required="required"/>
                     </div>
                     <div class="clearfix">
@@ -316,7 +331,7 @@ $(document).ready(function(){
                         </select>
                     </div>
                     <div class="clearfix">
-                        <label>Wikipedia URL</label>
+                        <label>Wikipedia URL *</label>
                         <input size="50" type="text" name="data[QuestionEnglish][wikipedia]"/>
                     </div>
                 </fieldset>

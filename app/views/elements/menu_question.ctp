@@ -48,6 +48,7 @@ $role = $session->read('role');
     <?php
     if($role == '2'){
         ?>
+    <!--
     <div class="widget">
         <header>
             <h2>Set Ερωτήσεων</h2>
@@ -77,7 +78,7 @@ $role = $session->read('role');
                 
             </dl>
         </section>
-    </div>
+    </div>-->
     <?php } ?>
     
     

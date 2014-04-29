@@ -10,9 +10,7 @@
                 <dd><img src="/img/fam/usage.png" />&nbsp;<a href="/reports/dashboard">Dashboard</a></dd>
                 <dd><img src="/img/fam/chart_curve.png" />&nbsp;<a href="/reports/activeUsers">Ενεργοί Χρήστες</a></dd>
                 <dd><img src="/img/fam/chart_line.png" />&nbsp;<a href="/reports/scoresDistribution">Κατανομή πόντων</a></dd>
-                <dd><img src="/img/fam/chart_pie.png" />&nbsp;<a href="/reports/gamesTotal">Συνολικές παρτίδες</a></dd>
-                <dd><img src="/img/fam/chart_bar.png" />&nbsp;<a href="/reports/gamesBreakdown">Ανάλυση παρτίδων</a></dd>
-                <dd><img src="/img/fam/user.png" />&nbsp;<a href="/reports/listFacebookPlayers">Παίχτες με Facebook (<?php echo $crm;?>)</a></dd>				    				                                    				    
+                <dd><img src="/img/fam/chart_bar.png" />&nbsp;<a href="/reports/gamesBreakdown">Ανάλυση παρτίδων</a></dd>		    				                                    				    
             </dl>				    
         </section>				    
     </div>	
@@ -27,12 +25,7 @@
             		<dd><img src="/img/fam/gr.png" />&nbsp;<a href="/reports/questionReport/<?php echo LANG_GREEK ?>">Ελληνικές Ερωτήσεις   (<?php echo $countReportsGreek  ?>) </a></dd> 
             	<?php }else { ?>
             		<dd><img src="/img/fam/gr.png" /> Ελληνικές Ερωτήσεις (<?php echo $countReportsGreek  ?>)</dd>
-            	<?php }   ?>   
-                <?php if($countReportsEnglish > 0 ) { ?>
-                	<dd><img src="/img/fam/gb.png" />&nbsp;<a href="/reports/questionReport/<?php echo LANG_ENGLISH ?>">Αγγλικές Ερωτήσεις  (<?php echo $countReportsEnglish  ?>)</a></dd>   
-                <?php }else { ?>     
-                	<dd><img src="/img/fam/gb.png" /> Αγγλικές Ερωτήσεις (<?php echo $countReportsEnglish  ?>)</dd>    
-                <?php }   ?>                       
+            	<?php }   ?>                       
             </dl>                                     
         </section>                  
     </div>  

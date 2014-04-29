@@ -121,7 +121,7 @@
  * characters."
  * @link http://php.net/session_name
  */
-	Configure::write('Session.cookie', 'CAKEPHP');
+	Configure::write('Session.cookie', 'CAKEPHPXFORGE');
 /**
  * Session time out time (in seconds).
  * Actual value depends on 'Security.level' setting.
@@ -152,7 +152,7 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'Ed3nr3d!S@lt1ng');
+	Configure::write('Security.salt', 'EXf0rg3!S@lt1ng');
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
  * Will append a querystring parameter containing the time the file was modified. This is

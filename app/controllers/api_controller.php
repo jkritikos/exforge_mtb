@@ -390,6 +390,8 @@ class ApiController extends AppController {
                     $obj['Score']['free'] = $free;
                     $obj['Score']['app_type_id'] = $applicationTypeId;
                     
+                    $this->log("API->saveScores() trying to save score with player_id $pId category_id $c score $s free $free app_type_id $applicationTypeId", LOG_DEBUG);
+                    
                     if($this->Score->save($obj)){
                         
                         //Save to high scores table if high enough

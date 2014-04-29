@@ -163,7 +163,9 @@ function searchByCategoryPoints(c,p){
         <h2>Επίπεδα ερωτήσεων ανα κατηγορία</h2>
         
         <?php
+        $k=0;
         foreach($points_category as $cId => $values){                        
+            $k++;
             if($cId == 1) $categoryName = "Επιστήμη";
             else if($cId == 2) $categoryName = "Κινηματογράφος";
             else if($cId == 3) $categoryName = "Γεωγραφία";
@@ -173,10 +175,10 @@ function searchByCategoryPoints(c,p){
             else if($cId == 7) $categoryName = "Μουσική";
             else if($cId == 8) $categoryName = "Τέχνες";
             else if($cId == 9) $categoryName = "Ζώα & Φυτά";
-            else if($cId == 10) $categoryName = "Lifestyle";
+            else if($cId == 1000) $categoryName = "Exforge";
 
             $gridClass = "grid_3 first";
-            if($cId % 2 == 0) $gridClass = "grid_3";
+            if($k % 2 == 0) $gridClass = "grid_3";
 
             ?>
             <div class="<?php echo $gridClass; ?>">

@@ -23,7 +23,7 @@ class Question extends AppModel {
         $start = time();
         
         $sql = "select q.id, q.category_id,q.question,q.answer_a,q.answer_b,q.answer_c,q.answer_d, ";
-        $sql .=" q.correct, q.value,q.wikipedia,q.question_language_id from questions q where validated=1 and q.pack_id = 0";
+        $sql .=" q.correct, q.value,q.wikipedia,q.question_language_id from questions q where validated=1 and question_language_id=1";
         $rs = $this->query($sql);
         
         $data = array();

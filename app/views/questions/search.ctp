@@ -45,10 +45,11 @@ $(document).ready(function(){
                         ?>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Ερώτηση *</label>
                         <input size="40" type="text" name="data[Question][question]"/>
-                    </div>                    
+                    </div>-->                    
                     <div class="clearfix">
                         <label>Πόντοι</label>
                         <select name="data[Question][value]">
@@ -58,6 +59,7 @@ $(document).ready(function(){
                             <option value="300">Δύσκολη (300)</option>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Αφορά Γλώσσα</label>
                         <select name="data[Question][language_id]">
@@ -66,7 +68,7 @@ $(document).ready(function(){
                             <option value="1">Ελληνικά</option>
                             <option value="2">Αγγλικά</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="clearfix">
                         <label>Χρήστης</label>
                         <select name="data[Question][user_id]">

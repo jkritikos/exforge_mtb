@@ -7,28 +7,23 @@
 
             <?php
             $i = 0;
-
+            $z = 0;
            
             //echo "<pre>"; var_dump($scores); echo "</pre>";
-
+            
+            
             foreach($scores as $s => $values){
-                 
+                $z++;
+                
                 if($s == 1) $categoryName = "Επιστήμη";
-                else if($s == 2) $categoryName = "Κινηματογράφος";
                 else if($s == 3) $categoryName = "Γεωγραφία";
-                else if($s == 4) $categoryName = "Αθλητικά";
-                else if($s == 5) $categoryName = "Τεχνολογία";
                 else if($s == 6) $categoryName = "Ιστορία";
-                else if($s == 7) $categoryName = "Μουσική";
-                else if($s == 8) $categoryName = "Τέχνες";
-                else if($s == 9) $categoryName = "Ζώα & Φυτά";
-                else if($s == 10) $categoryName = "Lifestyle";
-                else if($s == 13) $categoryName = "Total Buzz";
+                else if($s == 1000) $categoryName = "Exforge";
 
                 $gridClass = "grid_3 first";
-                if($s % 2 == 0) $gridClass = "grid_3";
+                if($z % 2 == 0) $gridClass = "grid_3";
                 
-                $numberOfGames = $games[$s];
+                $numberOfGames = isset($games[$s]) ? $games[$s] : 0;
                 ?>
 
                 <div class="<?php echo $gridClass; ?>">

@@ -1,6 +1,6 @@
 <?php
 if(!isset($redirectUrl)){
-    $redirectUrl = "/venues/index";
+    $redirectUrl = "/questions/create";
 }
 
 //Cookie data

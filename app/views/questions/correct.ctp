@@ -19,7 +19,7 @@ function validateLanguageCombinations(){
 }
 
 function getTargetLanguageLabel(){
-   var v =  $("#questionLanguageTarget").val();
+   var v =  -1;
        
    if(v == '-1'){
        languageForQuestion = 'Όλες';
@@ -37,10 +37,6 @@ $(document).ready(function(){
     
     $("#tags").keyup(function(){
         this.value = this.value.toUpperCase(); 
-    });
-    
-    $("#questionLanguageTarget").change(function(){
-        languageForQuestion = getTargetLanguageLabel();
     });
     
     var key = CryptoJS.enc.Hex.parse('<?php echo AES_KEY; ?>');
@@ -139,6 +135,13 @@ $(document).ready(function(){
     		}
     	}
         
+        //keep a copy of the plain text
+        $('#plain_question').val($("#question").val());
+        $('#plain_answer_a').val($("#answer_a").val());
+        $('#plain_answer_b').val($("#answer_b").val());
+        $('#plain_answer_c').val($("#answer_c").val());
+        $('#plain_answer_d').val($("#answer_d").val());
+        
         //Build confirmation
         var selectedCorrect = $('#correct').val();
         var selectedCorrectLetter = '';
@@ -159,11 +162,12 @@ $(document).ready(function(){
             selectedCorrectAnswer = $('#answer_d').val();
         }
         
-        var confirmQuestion = 'Έχεις καταχωρήσει σαν απάντηση την '+selectedCorrectLetter+' = '+selectedCorrectAnswer+'.\n Τα tags σου είναι '+selectedTags+'.\n\n Αφορά γλώσσα '+languageForQuestion+' \n\n Είναι ΣΙΓΟΥΡΑ σωστά?';
+        var confirmQuestion = 'Έχεις καταχωρήσει σαν απάντηση την '+selectedCorrectLetter+' = '+selectedCorrectAnswer+'.\n Τα tags σου είναι '+selectedTags+'.\n\n Είναι ΣΙΓΟΥΡΑ σωστά?';
         var confirmed = confirm(confirmQuestion);
         if(confirmed){
         
-            var validLanguages = validateLanguageCombinations();
+            //var validLanguages = validateLanguageCombinations();
+            var validLanguages = true;
             if(!validLanguages){
                 return false;
             } else {
@@ -250,6 +254,13 @@ $(document).ready(function(){
                 <input type="hidden" name="data[Question][id]" value="<?php echo $id; ?>"/>
                 <input type="hidden" name="data[Question][encrypted]" value="1"/>
                 <input type="hidden" name="data[Question][encrypted_answers]" value="1"/>
+                
+                <input type="hidden" id="plain_question" name="data[Question][plain_question]" value="" />
+                <input type="hidden" id="plain_answer_a" name="data[Question][plain_answer_a]" value="" />
+                <input type="hidden" id="plain_answer_b" name="data[Question][plain_answer_b]" value="" />
+                <input type="hidden" id="plain_answer_c" name="data[Question][plain_answer_c]" value="" />
+                <input type="hidden" id="plain_answer_d" name="data[Question][plain_answer_d]" value="" />
+                
                 <header><h2>Συμπληρώστε την παρακάτω φόρμα για να επικυρώσετε την ερώτηση:</h2></header>
 
 		<hr />
@@ -259,6 +270,7 @@ $(document).ready(function(){
                         <label><?php echo $user['User']['fname'] . " " . $user['User']['lname']; ?></label>
                         
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Γλώσσα ερώτησης *</label>
                         <select id="questionLanguageSelector" required="required" name="data[Question][question_language_id]">
@@ -266,16 +278,19 @@ $(document).ready(function(){
                             <option <?php if($question['Question']['question_language_id'] == 2) echo "selected"; ?> value="2">Αγγλικά</option>
                         </select>
                     </div>
+                    -->
 		    <div class="clearfix">
                         <label>Κατηγορία *</label>
                         <select required="required" id="workTypeSelector" name="data[Question][category_id]">
-                        <option value="">Επιλέξτε</option>
+                        <option value="1000">Exforge</option>
+                        
                         <?php
+                        
                         $catId = $question['Question']['category_id'];
                         $correct = $question['Question']['correct'];
                         $points = $question['Question']['value'];
                         $language_id = $question['Question']['language_id'];
-
+                        /*
                         foreach($categories as $k => $v){
                             if($catId == $k) $selected = "selected ";
                             else $selected = "";
@@ -283,14 +298,17 @@ $(document).ready(function(){
                             <option <?php echo $selected; ?> value="<?php echo $k ?>"><?php echo $v ?></option>
                             <?php
                         }
+                         * 
+                         */
                         ?>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Set Ερωτήσεων *</label>
                         <label><?php echo $question['QuestionSet']['name']; ?></label>
 	                        
-                    </div>
+                    </div>-->
                     
                     <?php
                     if($isTranslation == 1){
@@ -382,12 +400,13 @@ $(document).ready(function(){
                     <div class="clearfix">
                         <label>Πόντοι *</label>
                         <select required="required" name="data[Question][value]">
-                            <option <?php if($points == "0") echo "selected "; ?> value="0">Επιλέξτε</option>
-                            <option <?php if($points == "100") echo "selected "; ?> value="100">Εύκολη (100)</option>
-                            <option <?php if($points == "200") echo "selected "; ?> value="200">Μεσαία (200)</option>
-                            <option <?php if($points == "300") echo "selected "; ?> value="300">Δύσκολη (300)</option>
+                            <option <?php if($question['Question']['value'] == "0") echo "selected "; ?> value="0">Επιλέξτε</option>
+                            <option <?php if($question['Question']['value'] == "100") echo "selected "; ?> value="100">Εύκολη (100)</option>
+                            <option <?php if($question['Question']['value'] == "200") echo "selected "; ?> value="200">Μεσαία (200)</option>
+                            <option <?php if($question['Question']['value'] == "300") echo "selected "; ?> value="300">Δύσκολη (300)</option>
                         </select>
                     </div>
+                    <!--
                     <div class="clearfix">
                         <label>Αφορά Γλώσσα *</label>
                         <select id="questionLanguageTarget" required="required" name="data[Question][language_id]">
@@ -395,7 +414,7 @@ $(document).ready(function(){
                             <option <?php if($language_id == "1") echo "selected "; ?> value="1">Ελληνικά</option>
                             <option <?php if($language_id == "2") echo "selected "; ?> value="2">Αγγλικά</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="clearfix">
                         <label>Wikipedia URL</label>
                         <input id="wikipediaUrl" required="required" size="50" type="text" name="data[Question][wikipedia]" value="<?php echo $question['Question']['wikipedia']; ?>"/>

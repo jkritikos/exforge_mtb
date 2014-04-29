@@ -20,9 +20,9 @@ if($contentLanguage == 1){
                 $total +=  $c['Category']['count'];
             }
 
-            $percentage = ($total * 100) / 10000 . "%";
+            $percentage = ($total * 100) / 4000 . "%";
 
-            ?><dt>Σύνολο: <?php echo $total; ?>/10000</dt>
+            ?><dt>Σύνολο: <?php echo $total; ?>/4000</dt>
             <dd><div class="progress progress-kinimatografos"><span style="width: <?php echo $percentage; ?>"><b><?php echo $percentage; ?></b></span></div></dd>
             <br><br>
             <?php
@@ -39,7 +39,7 @@ if($contentLanguage == 1){
                     $class = "progress progress-kinimatografos";
                 } else if($id == 3){
                     $class = "progress progress-geografia";
-                } else if($id == 4){
+                } else if($id == 1000){
                     $class = "progress progress-athlitika";
                 } else if($id == 5){
                     $class = "progress progress-texnologia";
