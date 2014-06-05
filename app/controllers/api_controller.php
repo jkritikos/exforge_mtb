@@ -588,6 +588,43 @@ class ApiController extends AppController {
 	//$this->set(compact('data'));
     }
     
+    function getSQLCat($cat){
+        $this->Question = ClassRegistry::init('Question');
+        //$questions = $this->Question->getAll();
+        $questions = $this->Question->updateQuestionsForCategory(1,$cat);
+        
+        $data['RESPONSE'] = "1";
+        //$data['questions'] = $questions;
+        
+        foreach($questions as $q){
+            $question_id = $q['id'];
+          
+            $question = $q['question'];
+            
+            $answer_a = $q['answer_a'];
+            $answer_b = $q['answer_b'];
+            $answer_c = $q['answer_c'];
+            $answer_d = $q['answer_d'];
+            $correct = $q['correct'];
+            $value = $q['value'];
+            $wiki = $q['wikipedia'];
+            
+            if($correct == 1) $correct = "a";
+            else if($correct == 2) $correct = "b";
+            else if($correct == 3) $correct = "c";
+            else if($correct == 4) $correct = "d";
+            
+            $category_id = $q['category_id'];
+            
+            echo "insert into questions (category_id,question,answer_a,answer_b,answer_c,answer_d,correct,value,question_id,wikipedia) values ($category_id,'$question','$answer_a','$answer_b','$answer_c','$answer_d','$correct',$value,$question_id,'$wiki'); <br>";
+            //echo "insert into questions (category_id,question,answer_a,answer_b,answer_c,answer_d,correct,value,question_id) values ($category_id,\"$question\",\"$answer_a\",\"$answer_b\",\"$answer_c\",\"$answer_d\",$correct,$value,$question_id); <br>";
+            //echo "insert into questions (category_id,question,answer_a,answer_b,answer_c,answer_d,correct,value,question_id) values ($category_id,$question,$answer_a,$answer_b,$answer_c,$answer_d,$correct,$value,$question_id); <br>";
+        }
+        
+        $this->layout = 'blank';
+	//$this->set(compact('data'));
+    }
+    
     function sendFeedback(){
         if(isset($_REQUEST['email'])) $email = $_REQUEST['email'];
         if(isset($_REQUEST['feedback'])) $feedback = $_REQUEST['feedback'];

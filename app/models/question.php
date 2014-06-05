@@ -50,6 +50,37 @@ class Question extends AppModel {
         return $data;
     }
     
+    function updateQuestionsForCategory($userVersion, $cat){
+        $start = time();
+        
+        $sql = "select q.id, q.category_id,q.question,q.answer_a,q.answer_b,q.answer_c,q.answer_d, ";
+        $sql .=" q.correct, q.value,q.wikipedia,q.question_language_id from questions q where validated=1 and question_language_id=1 and category_id=$cat";
+        $rs = $this->query($sql);
+        
+        $data = array();
+        if(is_array($rs)){
+            foreach($rs as $i => $values){
+                $data[$i]['id'] = $rs[$i]['q']['id'];
+                $data[$i]['category_id'] = $rs[$i]['q']['category_id'];
+                $data[$i]['question'] = $rs[$i]['q']['question'];
+                $data[$i]['answer_a'] = $rs[$i]['q']['answer_a'];
+                $data[$i]['answer_b'] = $rs[$i]['q']['answer_b'];
+                $data[$i]['answer_c'] = $rs[$i]['q']['answer_c'];
+                $data[$i]['answer_d'] = $rs[$i]['q']['answer_d'];
+                $data[$i]['correct'] = $rs[$i]['q']['correct'];
+                $data[$i]['wikipedia'] = $rs[$i]['q']['wikipedia'];
+                $data[$i]['value'] = $rs[$i]['q']['value'];
+                $data[$i]['language'] = $rs[$i]['q']['question_language_id'];
+            }
+        }
+
+        $end = time();
+        $timeTook = ($end - $start);
+        $this->log("Question->getAll() took $timeTook seconds", LOG_DEBUG);
+        
+        return $data;
+    }
+    
     function getAll(){
         $start = time();
         
