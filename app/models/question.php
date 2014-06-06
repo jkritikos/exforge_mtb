@@ -287,6 +287,32 @@ class Question extends AppModel {
     }
 
     /*Returns the number of all questions*/
+    function countAllValidatedQuestions($setId){
+        $start = time();
+        
+        $sql = "select count(*) cnt from questions q where validated=1 ";
+        
+        if($setId != null){
+            $sql .= " and q.pack_id=$setId";
+        }
+        
+        $rs = $this->query($sql);
+
+        $count = 0;
+        if(is_array($rs)){
+            foreach($rs as $i => $values){
+                $count = $rs[$i][0]['cnt'];
+            }
+        }
+
+        $end = time();
+        $timeTook = ($end - $start);
+        $this->log("Question->countAllValidatedQuestions() took $timeTook seconds", LOG_DEBUG);
+        
+        return $count;
+    }
+    
+    /*Returns the number of all questions*/
     function countAllQuestions($setId){
         $start = time();
         

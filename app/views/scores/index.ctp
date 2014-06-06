@@ -17,6 +17,7 @@
                 
                 if($s == 1) $categoryName = "Επιστήμη";
                 else if($s == 3) $categoryName = "Γεωγραφία";
+                else if($s == 4) $categoryName = "Αθλητικά";
                 else if($s == 6) $categoryName = "Ιστορία";
                 else if($s == 1000) $categoryName = "Exforge";
 

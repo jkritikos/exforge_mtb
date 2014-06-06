@@ -45,7 +45,7 @@ if($contentLanguage == 1){
                     $class = "progress progress-texnologia";
                 } else if($id == 6){
                     $class = "progress progress-istoria";
-                } else if($id == 7){
+                } else if($id == 4){
                     $class = "progress progress-mousiki";
                 } else if($id == 8){
                     $class = "progress progress-texnes";

@@ -12,6 +12,7 @@ $role = $session->read('role');
                 <dd><img src="/img/fam/timesheet_add.png" />&nbsp;<a href="/questions/create">Νέα ερώτηση</a></dd>
                 <dd><img src="/img/fam/pattern.png" />&nbsp;<a href="/questions/search">Αναζήτηση</a></dd>
                 <dd><img src="/img/fam/chart_bar.png" />&nbsp;<a href="/questions/breakdown">Κατανομή</a></dd>
+                <dd><img src="/img/fam/usage.png" />&nbsp;<a href="/questions/updateVersion">Διάθεση νέων ερωτήσεων</a></dd>
                 
                 <?php
                 if($nowiki > 0){

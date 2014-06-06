@@ -41,6 +41,65 @@ class QuestionsController extends AppController {
         $this->set(compact('data'));
     }
     
+    function updateVersion(){
+        $currentUser = $this->Session->read('userID');
+        $contentLanguage = $this->Session->read('content_language');
+        $this->set('headerTitle', "Διάθεση νέων ερωτήσεων");
+        
+	if($currentUser != null){
+            $this->QuestionVersion = ClassRegistry::init('QuestionVersion');
+            $versions = $this->QuestionVersion->getVersions();
+            $this->set('versions', $versions);
+            
+            //echo "<pre>"; var_dump($versions); echo "</pre>";
+            
+            $allQuestions = $this->Question->countAllValidatedQuestions(null);
+            $this->set('allQuestions', $allQuestions);
+            
+            //menu stuff
+            //Load question sets
+            $this->QuestionSet = ClassRegistry::init('QuestionSet');
+            $questionSets = $this->QuestionSet->countSets($contentLanguage);
+            $this->set('question_sets', $questionSets);
+            
+            //Load rejected translation counter
+            $rejectedTranslationsCounter = $this->Question->getNumberOfRejectedTranslations();
+            $this->set('rejectedTranslations', $rejectedTranslationsCounter);
+            $rejectedQuestionId = $this->Question->getQuestionForRejectedTranslationValidation();
+            $this->set('idOfRejectedTranslation',$rejectedQuestionId);
+            
+            //Load question counter
+            $qCounter = $this->Question->getNumberOfQuestions($contentLanguage);
+            $this->set("counter", $qCounter);
+            
+            //Load translation question counter
+            $tCounterGreek = $this->Question->countQuestionsForTranslation(LANG_GREEK);
+            $tCounterEnglish = $this->Question->countQuestionsForTranslation(LANG_ENGLISH);
+            $this->set("translateGreek", $tCounterGreek);
+            $this->set("translateEnglish", $tCounterEnglish);
+
+            //Load question validation counter
+            $questionsForValidationGreek = $this->Question->countQuestionsForValidation(LANG_GREEK);
+            $this->set("validationCounterGreek", $questionsForValidationGreek);
+            $questionsForValidationEnglish = $this->Question->countQuestionsForValidation(LANG_ENGLISH);
+            $this->set("validationCounterEnglish", $questionsForValidationEnglish);
+            
+            //Load counter of questions available for sets 
+            $availableQuestionsCount = $this->Question->find('count', array('conditions' => array('pack_id' => null, 
+                                                                                                  'question_language_id' => $contentLanguage)));
+            $this->set('availableQuestionsCount', $availableQuestionsCount);
+            
+            //Load question wikipedia counter
+            $noWiki = $this->Question->getNumberOfQuestionsWithoutWikipedia();
+            $this->set('nowiki', $noWiki);
+            $noWikiNextId = $this->Question->getQuestionForWikiInsertion();
+            $this->set('noWikiNextId',$noWikiNextId);
+            
+        } else {
+            $this->requireLogin('/questions/updateVersion');
+	}
+    }
+    
     function wikipediaTest(){
         $data = $this->Question->find('all');
         

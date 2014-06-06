@@ -52,7 +52,7 @@ if(isset($email)){
 </head>
 <body class="login">
     <div class="login-box">
-    	<img src="/img/logo.png" />
+    	<img src="/img/exforge_logo.png" />
        
     	<div class="login-box-top">
     		<div class="login-hd">Login</div>
