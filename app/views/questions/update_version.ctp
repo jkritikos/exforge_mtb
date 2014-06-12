@@ -36,14 +36,15 @@ $(document).ready(function(){
                 <div class="columns">
                 <div class="grid_6 first">
                         	
-                    <form id="form" class="form panel" method="post" action="/users/search">
+                    <form id="form" class="form panel" method="post" action="/questions/updateVersion">
+                        <input type="hidden" name="data[QuestionVersion][number_of_questions]" value="<?php echo $allQuestions; ?>" />
                         <header><h2>Δημιούργησε μια νέα έκδοση ερωτήσεων:</h2></header>
 
                         <hr />
                         <fieldset>
                             <div class="clearfix">
                                 <label>Όνομα</label>
-                                <input id="fnameField" type="text" name="data[User][fname]" minlength="3"/>
+                                <input id="fnameField" type="text" name="data[QuestionVersion][name]" minlength="3"/>
                             </div>
                             
                             <div class="clearfix">
@@ -105,7 +106,7 @@ $(document).ready(function(){
                                         <td><?php echo $data['QuestionVersion']['id']; ?></td>
                                         <td><?php echo $data['QuestionVersion']['name']; ?></td>
                                         <td><?php echo $data['QuestionVersion']['created']; ?></td>
-                                        <td><?php echo $data['QuestionVersion']['number_of_questions']; ?></td>
+                                        <td><?php echo $data['QuestionVersion']['questions']; ?></td>
                                         
                                     </tr>	                    		
                                     <?php	                    	

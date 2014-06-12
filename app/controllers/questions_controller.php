@@ -48,6 +48,17 @@ class QuestionsController extends AppController {
         
 	if($currentUser != null){
             $this->QuestionVersion = ClassRegistry::init('QuestionVersion');
+            
+            //on submit
+            if (!empty($this->data)){
+                if($this->QuestionVersion->save($this->data)){
+                    $this->set('notification', 'New question version created.');
+                } else {
+                    $this->set('notification', 'Unable to create the new question version - please try again.');
+                }
+            }
+            
+            
             $versions = $this->QuestionVersion->getVersions();
             $this->set('versions', $versions);
             
