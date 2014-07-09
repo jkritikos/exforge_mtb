@@ -19,7 +19,7 @@ if(isset($email)){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico"/>
-<title>Mind the Buzz</title>
+<title>Exforge Challenge</title>
 
 <link rel="stylesheet" media="screen" href="/css/reset.css" />
 <link rel="stylesheet" media="screen" href="/css/style.css" />
