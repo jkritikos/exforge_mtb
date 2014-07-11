@@ -2,7 +2,7 @@
 
 class Score extends AppModel {
     
-    var $categories = array(1,3,6,1000);
+    var $categories = array(1,3,4,6,1000);
     
     
     function disableScoreForPlayers($playerList){

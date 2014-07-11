@@ -97,7 +97,7 @@ if(isset($email)){
                         
 		</form>
     		<div id="linebreak"></div>
-		<a href="/users/resetPassword">Forgot your password?</a>
+		<!--<a href="/users/resetPassword">Forgot your password?</a>-->
     	</div>
 	</div>
 </body>
