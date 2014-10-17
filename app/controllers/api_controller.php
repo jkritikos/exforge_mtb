@@ -248,7 +248,16 @@ class ApiController extends AppController {
         $this->layout = 'blank';
         $this->set(compact('data'));
     }
-	
+    
+    function checkContent(){
+        $this->Question = ClassRegistry::init('Question');
+        $latestVersion = $this->Question->getLatestContentVersion();
+        $data['CONTENT_VERSION'] = $latestVersion;
+        
+        $this->layout = 'blank';
+        $this->set(compact('data'));
+    }
+    
     function getHighScores(){
         if(isset($_REQUEST['friends'])){
             $friends = $_REQUEST['friends'];
@@ -274,6 +283,10 @@ class ApiController extends AppController {
         $this->SecurityModel = ClassRegistry::init('SecurityModel');
         $actions = $this->SecurityModel->determineActionsForVersion($version);
         $data['SECURITY'] = $actions;
+        
+        $this->Question = ClassRegistry::init('Question');
+        $latestVersion = $this->Question->getLatestContentVersion();
+        $data['CONTENT_VERSION'] = $latestVersion;
         
         $this->layout = 'blank';
         $this->set(compact('data'));
