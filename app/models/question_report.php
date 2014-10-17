@@ -15,8 +15,13 @@ class QuestionReport extends AppModel {
             
             $this->QuestionReportError = ClassRegistry::init('QuestionReportError');
             
+            $this->log("QuestionReport->updateQuestionReport() errors is $errors", LOG_DEBUG);
+            
             if($errors != null){
                 foreach($errors as $i){
+                    
+                    $this->log("QuestionReport->updateQuestionReport() processing error $i for question $questionId", LOG_DEBUG);
+                    
                     if($i != ''){
 
                         $this->QuestionReportError->create();
@@ -24,13 +29,18 @@ class QuestionReport extends AppModel {
                         $obj['QuestionReportError']['report_id'] = $reportId;
                         $obj['QuestionReportError']['error_id'] = $i;
                         if($this->QuestionReportError->save($obj)){
-
+                            $this->log("QuestionReport->updateQuestionReport() saved OK", LOG_DEBUG);
                         } else {
+                            $this->log("QuestionReport->updateQuestionReport() save ERROR", LOG_DEBUG);
                             $exception = true;
                             break;
                         }
+                    } else {
+                        $this->log("QuestionReport->updateQuestionReport() error is EMPTY", LOG_DEBUG);
                     }
                 }
+            } else {
+                $this->log("QuestionReport->updateQuestionReport() NULL errors", LOG_DEBUG);
             }
             
         }

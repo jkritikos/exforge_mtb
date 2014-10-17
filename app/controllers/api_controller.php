@@ -19,7 +19,7 @@ class ApiController extends AppController {
     
     function forceSSL() {
         if(Configure::read('debug') == '0'){
-            $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+            //$this->redirect('https://' . env('SERVER_NAME') . $this->here);
         }
     }
 	
@@ -377,8 +377,8 @@ class ApiController extends AppController {
                 
                 //Save the gender if we havent done so already
                 if($winningPlayer['Player']['gender'] == null){
-                    $winningPlayer['Player']['gender'] = $gender;
-                    $this->Player->save($winningPlayer);
+                    //$winningPlayer['Player']['gender'] = $gender;
+                    //$this->Player->save($winningPlayer);
                 }
                 
                 if(!$this->Score->scoreExists($pId, $s, $c)){
@@ -647,6 +647,8 @@ class ApiController extends AppController {
         if(isset($_REQUEST['questionReportQuestionId'])) $questionId = $_REQUEST['questionReportQuestionId'];
         if(isset($_REQUEST['error'])) $errors = $_REQUEST['error'];
 		
+        $this->log("API->reportQuestion() called with remotePlayerId $remotePlayerId questionId $questionId and errors $errors", LOG_DEBUG);
+        
 	$errors = json_decode(urldecode($errors));
 	
         $this->QuestionReport = ClassRegistry::init('QuestionReport');

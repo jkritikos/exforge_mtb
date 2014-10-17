@@ -117,14 +117,6 @@ $(function () {
                                 ?>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Group Παιχνίδια</td>
-                                <td class="ar"><?php echo $todayGroupGames; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Push notifications</td>
-                                <td class="ar"><?php echo $todayPush; ?></td>
-                            </tr>
                         </tbody>
 
                     </table>
@@ -151,14 +143,6 @@ $(function () {
                                 echo "$gamesTotal ($playersUniqueTotal)";
                                 ?>    
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>Group Παιχνίδια</td>
-                                <td class="ar"><?php echo $totalGroupGames; ?></td>
-                            </tr>
-                            <tr>
-                                <td>Push notifications</td>                       
-                                <td class="ar"><?php echo $totalPush; ?></td>
                             </tr>
                         </tbody>
                     </table>

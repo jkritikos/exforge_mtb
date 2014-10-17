@@ -41,6 +41,38 @@ class Player extends AppModel {
         
         return $data;
     }
+    
+    function countPlayers(){
+        $sql = "select count(*) as cnt from players p";
+        
+        $cnt = 0;
+        $rs = $this->query($sql);
+        if(is_array($rs)){
+            foreach($rs as $i => $values){
+                $cnt = $rs[$i]['0']['cnt'];
+            }
+        }
+        
+        return $cnt;
+        
+    }
+    
+    function getAllPlayers(){
+        $sql = "select p.id, p.name, date_format(p.created, '%d/%m/%Y' ) as date from players p order by p.id desc";
+        $rs = $this->query($sql);
+        
+        $data = array();
+        if(is_array($rs)){
+            foreach($rs as $i => $values){
+                $obj['id'] = $rs[$i]['p']['id'];
+                $obj['name'] = $rs[$i]['p']['name'];
+                $obj['created'] = $rs[$i]['0']['date'];
+                $data[] = $obj;
+            }
+        }
+        
+        return $data;
+    }
 }
 
 ?>

@@ -70,9 +70,20 @@ $(function () {
                 type: 'area',
                 name: 'Unique players',
                 pointInterval: 24 * 3600 * 1000,
-                pointStart: Date.UTC(2012, 10, 05),
+                //pointStart: Date.UTC(2012, 10, 05),
                 data: [
-                    <?php echo $timeline; ?>
+                    <?php
+                    foreach($timeline as $key => $values){
+                        $year = substr($values["date"], 0, 4);
+                        $month = substr($values["date"], 5, 2);
+                        $month = $month - 1;
+                        $day = substr($values["date"], 8, 2);
+                        $cnt = $values["cnt"];
+                        
+                        echo "[Date.UTC($year, $month, $day),$cnt],";
+                        
+                    }
+                    ?>
                 ]
             }]
         });

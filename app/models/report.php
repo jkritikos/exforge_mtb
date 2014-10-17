@@ -648,12 +648,17 @@ class Report extends AppModel {
         if(is_array($rs)){
             foreach($rs as $i => $values){
                 $cnt = $rs[$i]['0']['cnt'];
-                $data[] = $cnt;
+                $date = $rs[$i]['0']['d'];
+                
+                $obj['date'] = $date;
+                $obj['cnt'] = $cnt;
+                
+                $data[] = $obj;
             }
         }
         
-        $dataList = implode(",", $data);
-        return $dataList;
+        //$dataList = implode(",", $data);
+        return $data;
     }
     
     function getDailyGamesTimelineData(){

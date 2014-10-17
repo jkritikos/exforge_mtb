@@ -1,8 +1,41 @@
+<script>
+$(document).ready(function() {
+    $('#topSelector').change(function(e){
+        var url = '/scores/index/'+ $(this).val();
+        document.location.href = url;
+    });
+});
+</script>
 <section id="content">
     <div class="wrapper">
 
         <!-- Main Section -->
         <section class="grid_6 first">
+            
+            <div class="columns leading">
+        <div class="grid_6 first">
+
+            <form id="form" class="form" method="post" action="/scores/index" novalidate>
+		<header><h3>Επιλογή αριθμού αποτελεσμάτων:</h3></header>
+
+		<hr />
+		<fieldset>
+		                      
+                    <div class="clearfix">
+                        <label>Επιλέξτε</label>
+                        <select id="topSelector" name="data[Question][value]">
+                            <option <?php if($top == 10) echo "selected"; ?> value="10">TOP 10</option>
+                            <option <?php if($top == 20) echo "selected"; ?> value="20">TOP 20</option>
+                            <option <?php if($top == 50) echo "selected"; ?> value="50">TOP 50</option>
+                        </select>
+                    </div>
+		</fieldset>
+
+	    </form>
+
+	 </div>
+    </div>
+            
             <div class="columns leading">
 
             <?php
@@ -78,13 +111,33 @@
 <!-- End of Left column/section -->
 <!-- Right column/section -->
 
-<aside class="grid_2">
-   
-    <?php
-    echo $this->element('questionCounter');
-    ?>
+<!-- Sidebar -->
+<aside class="grid_2">		
+    <div class="widget">				    
+        <header>				    
+            <h2>Επιλογές</h2>			    
+        </header>
 
+        <section>				    
+            <dl>		
+                <dd><img src="/img/fam/chart_bar.png" />&nbsp;<a href="/scores/index">Κατάταξη</a></dd>
+                
+                <?php
+                if($playerCount > 0){
+                    ?>
+                    <dd><img src="/img/fam/user.png" />&nbsp;<a href="/scores/allPlayers">Παίκτες (<?php echo $playerCount; ?>)</a></dd>		
+                    <?php
+                } else {
+                    ?>
+                    <dd><img src="/img/fam/user.png" />&nbsp;Παίκτες (<?php echo $playerCount; ?>)</dd>		
+                    <?php
+                }
+                ?>
+            </dl>				    
+        </section>				    
+    </div>		
 </aside>
+<!-- Sidebar End -->
  <!-- End of Right column/section -->
 
 </div>

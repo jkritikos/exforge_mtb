@@ -106,13 +106,6 @@ $(function () {
                         <label>To date</label>
                         <input class="date" type="date" name="data[toDate]" />
                     </div>
-                    <div class="clearfix">
-                        <label>Δωρεάν</label>
-                        <select name="data[free]">
-                            <option value="0">Όχι</option>
-                            <option value="1">Ναι</option>
-                        </select>
-                    </div>
                 </fieldset>
                 <span id="errorMsg" style="display:none"><b><font color="red">You must specify at least one of the criteria.</font></b></span>
                 <hr />
@@ -123,7 +116,7 @@ $(function () {
         </div>
      <?php
      } else {
-         $chartLabel = "Από " .$criteria['from'] ." μέχρι " .$criteria['to'] ." (".$criteria['free'].")";
+         $chartLabel = "Από " .$criteria['from'] ." μέχρι " .$criteria['to'];
          ?>
          <h3>Ανάλυση παρτίδων: <?php echo $chartLabel; ?></h3>
      <hr/>

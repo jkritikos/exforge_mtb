@@ -157,7 +157,7 @@ class Score extends AppModel {
         return $data;
     }
 
-    function getWebHighScores(){
+    function getWebHighScores($top){
         $start = time();
         
         $data = array();
@@ -173,23 +173,27 @@ class Score extends AppModel {
 
             //echo "Running for category $z - ".count($obj)." scores found - i is $i<br>";
 
-            $sql = "select s.category_id, s.score, p.name, p.facebook_id from scores s ";
-            $sql .= "inner join players p ";
-            $sql .= "on(s.player_id=p.id) where category_id=$z and s.active=1 order by s.score desc limit 10";
+            //$sql = "select s.category_id, s.score, p.name, p.facebook_id from scores s ";
+            //$sql .= "inner join players p ";
+            //$sql .= "on(s.player_id=p.id) where category_id=$z and s.active=1 order by s.score desc limit $top";
+            
+            $sql = "select max(s.score) as score, s.category_id,p.name,p.id from scores s inner join players p ";
+            $sql .= "on(s.player_id=p.id) where category_id=$z and s.active=1 group by p.id order by score desc limit $top";
+            
             $rs = $this->query($sql);
             if(is_array($rs)){
                 
                 foreach($rs as $i => $values){
                     //echo "<b>&nbsp;&nbsp;&nbsp; category db add with index $i </b><br>";
-                    $obj[$i]['score'] = $rs[$i]['s']['score'];
+                    $obj[$i]['score'] = $rs[$i]['0']['score'];
                     $obj[$i]['name'] = $rs[$i]['p']['name'];
                     $obj[$i]['facebook_id'] = $rs[$i]['p']['facebook_id'];
                 }
                 $i++;
             }
 
-            if(count($obj) < 10){
-                $extra = 10 - count($obj);
+            if(count($obj) < $top){
+                $extra = $top - count($obj);
   
                 //echo "&nbsp;&nbsp;&nbsp; category $z - needs extra $extra - Start from index $i <br>";
                 while($extra > 0){

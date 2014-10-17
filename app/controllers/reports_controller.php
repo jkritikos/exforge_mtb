@@ -280,7 +280,7 @@ class ReportsController extends AppController {
                     $criteria['free'] = "Paid";
                 }
                 
-                $totalGamesBreakdown = $this->Report->getNumberOfGameTypes($from,$to,$free);
+                $totalGamesBreakdown = $this->Report->getNumberOfGameTypes($from,$to,0);
                 $this->set('results',$totalGamesBreakdown);
                 $this->set('criteria', $criteria);
                 
